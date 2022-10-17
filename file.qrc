@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="/">
+    <file>icons/atmega32.jpeg</file>
+  </qresource>
+</RCC>
