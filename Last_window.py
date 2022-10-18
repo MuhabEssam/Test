@@ -4,6 +4,7 @@ from PyQt5.QtCore import *
 from PyQt5.uic import loadUiType
 import sys
 from os import path
+import re
 #import file_rc
 form_class,_ =loadUiType(path.join(path.dirname(__file__),"CODE_gene.ui"))
 class mainapp(QMainWindow, form_class):
@@ -15,19 +16,25 @@ class mainapp(QMainWindow, form_class):
         self.initlization()
         self.Button_Connections()
     def initlization(self):
+        self.Port_regx="P\w"
         self.groupBox_2.setVisible(False)
         self.groupBox_3.setVisible(False)
         self.groupBox_4.setVisible(False)
         self.groupBox_5.setVisible(False)
         self.listWidget_2.setVisible(False)
     def Button_Connections(self):
-        self.pushButton.clicked.connect(lambda:self.Open_list(self.pushButton.text()))
+        for  button in self.groupBox.findChildren(QPushButton):
+            if(re.search(self.Port_regx,button.text())):
+                button.clicked.connect(self.Open_list)
         self.listWidget.currentRowChanged.connect(self.Clicked)
-    def Open_list(self,PIN_name):
+    def Open_list(self):
+        sender=self.sender()
+        self.listWidget_2.move(sender.x(),sender.y())
         self.listWidget_2.setVisible(True)
-        self.listWidget_2.itemClicked.connect(lambda :self.getItem(PIN_name))
+        self.listWidget_2.itemClicked.connect(lambda :self.getItem(sender.text()))
     def getItem(self,PIN_name):
         self.listWidget_2.setVisible(False)
+        #self.label_2.setText("your PIN:"+PIN_name+" :"+self.listWidget_2.currentItem().text())
         return PIN_name,self.listWidget_2.currentItem().text()
     def Clicked(self,idx=int):
         if idx==0:
