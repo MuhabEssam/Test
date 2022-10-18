@@ -13,7 +13,7 @@ class Second(QWidget,Form_class2):
         self.setupUi(self)
         self.handle_button()
     def Show_files(self):
-        win=QFileDialog.getOpenFileName(self,'Save At','C:\\')
+        win=QFileDialog.getExistingDirectory(self,'Save At','C:\\')
         self.lineEdit_2.setText(win[0])
     def openWin2(self):
         self.window2=mainapp()
