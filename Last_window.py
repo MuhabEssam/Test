@@ -16,25 +16,25 @@ class mainapp(QMainWindow, form_class):
         self.initlization()
         self.Button_Connections()
     def initlization(self):
-        self.Port_regx="P\w"
+        self.Port_regx="P\w" #Regex to get PORTS
         self.groupBox_2.setVisible(False)
         self.groupBox_3.setVisible(False)
         self.groupBox_4.setVisible(False)
         self.groupBox_5.setVisible(False)
         self.listWidget_2.setVisible(False)
-    def Button_Connections(self):
+    def Button_Connections(self): #C
         for  button in self.groupBox.findChildren(QPushButton):
             if(re.search(self.Port_regx,button.text())):
                 button.clicked.connect(self.Open_list)
         self.listWidget.currentRowChanged.connect(self.Clicked)
-    def Open_list(self):
+    def Open_list(self): #Open options for each PIN
         sender=self.sender()
         self.listWidget_2.move(sender.x(),sender.y())
         self.listWidget_2.setVisible(True)
         self.listWidget_2.itemClicked.connect(lambda :self.getItem(sender.text()))
-    def getItem(self,PIN_name):
+    def getItem(self,PIN_name):# Return PIN_name and PIN fucntion
         self.listWidget_2.setVisible(False)
-        #self.label_2.setText("your PIN:"+PIN_name+" :"+self.listWidget_2.currentItem().text())
+        self.label_2.setText("your PIN:"+PIN_name+" :"+self.listWidget_2.currentItem().text())
         return PIN_name,self.listWidget_2.currentItem().text()
     def Clicked(self,idx=int):
         if idx==0:
