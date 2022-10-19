@@ -2387,7 +2387,7 @@ PlotWidget {
     </font>
    </property>
    <property name="text">
-    <string>F_CPU</string>
+    <string>F_CPU :</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_3">

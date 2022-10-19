@@ -8,8 +8,10 @@ import re
 #import file_rc
 form_class,_ =loadUiType(path.join(path.dirname(__file__),"CODE_gene.ui"))
 class mainapp(QMainWindow, form_class):
-    def __init__(self,message):
-        self.projPath=message
+    def __init__(self,projPath,microSel,F_cpu):
+        self.projPath=projPath
+        self.micro=microSel
+        self.Freq=F_cpu
         QMainWindow.__init__(self)
         self.setupUi(self)
         #any connection i want must be in function and the function have the connection

@@ -13,41 +13,51 @@ class Second(QWidget,Form_class2):
         self.setupUi(self)
         self.objPath=""
         self.objName=""
-        self.projName_err=QMessageBox()
-        self.projPath_err=QMessageBox()
+        self.F_cpu=""
+        self.microSelect=""
+        self.ErrorBox=QMessageBox()
         self.Error_handle()
         self.handle_button()
         self.events()
     def events(self):
         self.lineEdit.textEdited.connect(self.editPname)
         self.lineEdit_2.textEdited.connect(self.editPname)
+        self.lineEdit_3.textEdited.connect(self.editFreq)
+        self.comboBox.currentTextChanged.connect(self.editMicro)
     def editPname(self):
         self.objName=self.lineEdit.text()
     def editPaname(self):
         self.objPath=self.lineEdit_2.text()
+    def editFreq(self):
+        self.F_cpu=self.lineEdit_3.text()
+    def editMicro(self):
+        self.microSelect=self.comboBox.currentText()
     def Show_files(self):
         self.objName = self.lineEdit.text()
         self.objPath=QFileDialog.getExistingDirectory(self,'Save At','.')
         self.lineEdit_2.setText(self.objPath)
     def Error_handle(self):
-        self.projName_err.setWindowTitle("Error")
-        self.projPath_err.setWindowTitle( "Error")
-        self.projName_err.setText("Please write project name")
-        self.projPath_err.setText("Please select path to save project")
-        self.projName_err.setStandardButtons(QMessageBox.Ok)
-        self.projPath_err.setStandardButtons(QMessageBox.Ok)
-        self.projPath_err.setIcon(QMessageBox.Warning)
-        self.projName_err.setIcon(QMessageBox.Warning)
+        self.ErrorBox.setWindowTitle( "Error")
+        self.ErrorBox.setStandardButtons(QMessageBox.Ok)
+        self.ErrorBox.setIcon(QMessageBox.Warning)
     def Create_folder(self):
         mkdir(path.join(self.objPath,self.objName))
     def openWin3(self):
         if(self.objName==""):
-            self.projName_err.exec()
+            self.ErrorBox.setText("Please write project name")
+            self.ErrorBox.exec()
         elif(self.objPath==""):
-            self.projPath_err.exec()
+            self.ErrorBox.setText("Please choose path to save project ")
+            self.ErrorBox.exec()
+        elif(self.comboBox.currentText()==""):
+            self.ErrorBox.setText("Please select a microcontroller ")
+            self.ErrorBox.exec()
+        elif (self.lineEdit_3.text() == ""):
+            self.ErrorBox.setText("Please write frequency  ")
+            self.ErrorBox.exec()
         else:
             self.Create_folder()
-            self.window2=mainapp(self.Folder_path())
+            self.window2=mainapp(self.Folder_path(),self.microSelect,self.F_cpu)
             self.window2.show()
     def handle_button(self):
         self.pushButton.clicked.connect(self.Show_files)
