@@ -8,8 +8,8 @@ import re
 #import file_rc
 form_class,_ =loadUiType(path.join(path.dirname(__file__),"CODE_gene.ui"))
 class mainapp(QMainWindow, form_class):
-    def __init__(self, parent=None):
-        super(mainapp, self).__init__(parent)  # i dont use it
+    def __init__(self,message):
+        self.projPath=message
         QMainWindow.__init__(self)
         self.setupUi(self)
         #any connection i want must be in function and the function have the connection
@@ -23,6 +23,7 @@ class mainapp(QMainWindow, form_class):
         self.groupBox_5.setVisible(False)
         self.listWidget_2.setVisible(False)
     def Button_Connections(self): #C
+        #print(self.projPath)
         for  button in self.groupBox.findChildren(QPushButton):
             if(re.search(self.Port_regx,button.text())):
                 button.clicked.connect(self.Open_list)
